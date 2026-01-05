@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Image App</title>
+</head>
+<body>
+  <h2>AI 生圖 App</h2>
+
+  <textarea id="prompt" placeholder="輸入你要的圖片描述" style="width:100%;height:80px;"></textarea>
+  <br><br>
+  <button onclick="gen()">生成圖片</button>
+
+  <p id="status"></p>
+  <img id="img" style="width:100%;margin-top:10px;"/>
+
+  <script>
+    async function gen() {
+      status.innerText = "生成中...";
+      const res = await fetch("/api/gen", {
+        method: "POST",
+        body: JSON.stringify({ prompt: prompt.value })
+      });
+      const data = await res.json();
+      img.src = data.url;
+      status.innerText = "完成";
+    }
+  </script>
+</body>
+</html>
